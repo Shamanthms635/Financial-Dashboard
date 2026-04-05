@@ -1,0 +1,589 @@
+/* ================================================================
+   Finance Dashboard — style.css
+   Minimal, clean, and easy to read.
+   CSS = controls how everything looks.
+================================================================ */
+
+/* ----------------------------------------------------------------
+   CSS VARIABLES — define all colors and sizes in one place.
+   Change a variable here and it updates everywhere it's used.
+---------------------------------------------------------------- */
+:root {
+  --bg:           #f5f5f4;       /* Page background */
+  --bg-card:      #ffffff;       /* Card / panel background */
+  --bg-sidebar:   #18181b;       /* Sidebar background */
+
+  --text:         #18181b;       /* Main text */
+  --text-muted:   #71717a;       /* Secondary / muted text */
+  --text-sidebar: #a1a1aa;       /* Sidebar text */
+
+  --accent:       #2563eb;       /* Primary blue — buttons, active states */
+  --green:        #16a34a;       /* Income amounts */
+  --red:          #dc2626;       /* Expense amounts */
+
+  --border:       #e4e4e7;       /* Lines / dividers */
+  --radius:       8px;           /* How rounded corners are */
+  --sidebar-w:    220px;         /* Sidebar width */
+}
+
+/* Dark mode — overrides the above when <body> has class "dark" */
+body.dark {
+  --bg:           #09090b;
+  --bg-card:      #18181b;
+  --bg-sidebar:   #09090b;
+  --text:         #fafafa;
+  --text-muted:   #71717a;
+  --text-sidebar: #71717a;
+  --border:       #27272a;
+}
+
+/* ----------------------------------------------------------------
+   RESET — strip default browser styles
+---------------------------------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  background: var(--bg);
+  color: var(--text);
+  display: flex;
+  min-height: 100vh;
+  transition: background 0.2s, color 0.2s;
+}
+a { text-decoration: none; color: inherit; }
+button { font-family: inherit; cursor: pointer; }
+
+/* ----------------------------------------------------------------
+   SIDEBAR
+---------------------------------------------------------------- */
+.sidebar {
+  width: var(--sidebar-w);
+  background: var(--bg-sidebar);
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0; left: 0;
+  height: 100vh;
+  z-index: 100;
+  transition: transform 0.2s;
+}
+
+.sidebar-brand {
+  padding: 24px 20px 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.brand-name {
+  color: #fff;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+}
+
+.sidebar-nav {
+  flex: 1;
+  padding: 14px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.nav-item {
+  display: block;
+  padding: 9px 12px;
+  border-radius: var(--radius);
+  color: var(--text-sidebar);
+  font-size: 13px;
+  font-weight: 500;
+  transition: background 0.15s, color 0.15s;
+}
+
+.nav-item:hover { background: rgba(255,255,255,0.05); color: #fff; }
+
+.nav-item.active {
+  background: var(--accent);
+  color: #fff;
+}
+
+/* Sidebar footer — role switcher */
+.sidebar-footer {
+  padding: 16px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+.role-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-sidebar);
+  margin-bottom: 6px;
+}
+
+.role-select {
+  width: 100%;
+  padding: 7px 10px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: var(--radius);
+  color: #fff;
+  font-size: 13px;
+  font-family: inherit;
+  outline: none;
+  margin-bottom: 10px;
+}
+
+.role-badge {
+  font-size: 11px;
+  color: var(--accent);
+  font-weight: 600;
+  text-align: center;
+}
+
+/* ----------------------------------------------------------------
+   MAIN CONTENT
+---------------------------------------------------------------- */
+.main-content {
+  margin-left: var(--sidebar-w);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ----------------------------------------------------------------
+   TOP BAR
+---------------------------------------------------------------- */
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 0 28px;
+  height: 60px;
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+/* Mobile hamburger — hidden on desktop */
+.menu-toggle {
+  display: none;
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 5px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.topbar-left { flex: 1; }
+
+.page-title {
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.page-subtitle {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 1px;
+}
+
+/* Dark mode toggle button */
+.dark-toggle {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.dark-toggle:hover { border-color: var(--accent); color: var(--accent); }
+
+/* ----------------------------------------------------------------
+   PAGES
+---------------------------------------------------------------- */
+.page { padding: 28px; flex: 1; }
+
+/* "hidden" removes element from view */
+.hidden { display: none !important; }
+
+/* ----------------------------------------------------------------
+   SUMMARY CARDS
+---------------------------------------------------------------- */
+.cards-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 22px;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.card-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+}
+
+.card-value {
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.card-value.balance { color: var(--accent); }
+.card-value.income  { color: var(--green); }
+.card-value.expense { color: var(--red); }
+
+/* ----------------------------------------------------------------
+   SECTION CARD (white panel)
+---------------------------------------------------------------- */
+.section-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 22px;
+  margin-bottom: 20px;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.section-title {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+/* Small text link button */
+.btn-link {
+  background: none;
+  border: none;
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 0;
+  font-family: inherit;
+}
+
+.btn-link:hover { opacity: 0.7; }
+
+/* ----------------------------------------------------------------
+   TRANSACTIONS TABLE
+---------------------------------------------------------------- */
+.table-wrapper { overflow-x: auto; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+th {
+  text-align: left;
+  padding: 8px 12px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+}
+
+td {
+  padding: 11px 12px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: middle;
+}
+
+tr:last-child td { border-bottom: none; }
+tbody tr:hover { background: rgba(37, 99, 235, 0.03); }
+
+/* Type badge (income / expense pill) */
+.badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.badge-income  { background: #dcfce7; color: var(--green); }
+.badge-expense { background: #fee2e2; color: var(--red); }
+
+body.dark .badge-income  { background: rgba(22,163,74,0.15); }
+body.dark .badge-expense { background: rgba(220,38,38,0.15); }
+
+/* Category tag */
+.cat-pill {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  background: var(--bg);
+  color: var(--text-muted);
+}
+
+/* Amount colors */
+.amt-income  { color: var(--green); font-weight: 600; }
+.amt-expense { color: var(--red);   font-weight: 600; }
+
+/* Admin action buttons inside rows */
+.action-btn {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 3px 10px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-muted);
+  font-family: inherit;
+  transition: all 0.15s;
+  margin-left: 4px;
+}
+
+.action-btn:hover          { border-color: var(--accent); color: var(--accent); }
+.action-btn.del:hover      { border-color: var(--red);    color: var(--red); }
+
+/* Empty state */
+.empty-state {
+  padding: 40px 20px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+/* ----------------------------------------------------------------
+   TRANSACTIONS PAGE CONTROLS
+---------------------------------------------------------------- */
+.controls-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+  align-items: center;
+}
+
+.input-field {
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-card);
+  color: var(--text);
+  font-size: 13px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.15s, background 0.2s;
+  min-width: 120px;
+}
+
+.input-field:focus { border-color: var(--accent); }
+
+#search-input { flex: 1; min-width: 160px; }
+
+/* Buttons */
+.btn-primary {
+  padding: 8px 16px;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 13px;
+  font-weight: 600;
+  font-family: inherit;
+  transition: opacity 0.15s;
+}
+
+.btn-primary:hover { opacity: 0.85; }
+
+.btn-secondary {
+  padding: 8px 16px;
+  background: none;
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 13px;
+  font-weight: 500;
+  font-family: inherit;
+  transition: all 0.15s;
+}
+
+.btn-secondary:hover { border-color: var(--text-muted); color: var(--text); }
+
+/* ----------------------------------------------------------------
+   INSIGHTS PAGE
+---------------------------------------------------------------- */
+.insights-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.insight-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 22px;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.insight-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.insight-value {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 4px;
+  color: var(--text);
+}
+
+.insight-desc {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* Monthly table coloring */
+.col-income  { color: var(--green); font-weight: 600; }
+.col-expense { color: var(--red);   font-weight: 600; }
+.col-pos     { color: var(--green); font-weight: 600; }
+.col-neg     { color: var(--red);   font-weight: 600; }
+
+/* ----------------------------------------------------------------
+   MODAL
+---------------------------------------------------------------- */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.modal {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  width: 100%;
+  max-width: 400px;
+  animation: fadeUp 0.2s ease;
+}
+
+@keyframes fadeUp {
+  from { transform: translateY(12px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.modal-title { font-size: 15px; font-weight: 700; }
+
+.modal-close {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-muted);
+  font-family: inherit;
+  transition: all 0.15s;
+}
+
+.modal-close:hover { border-color: var(--red); color: var(--red); }
+
+.form-group { margin-bottom: 14px; }
+
+.form-group label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 5px;
+}
+
+.form-group .input-field { width: 100%; }
+
+/* ----------------------------------------------------------------
+   TOAST
+---------------------------------------------------------------- */
+.toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(60px);
+  background: var(--text);
+  color: var(--bg-card);
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  z-index: 300;
+  transition: transform 0.25s ease;
+  white-space: nowrap;
+}
+
+.toast.show { transform: translateX(-50%) translateY(0); }
+
+/* ----------------------------------------------------------------
+   RESPONSIVE — Mobile
+---------------------------------------------------------------- */
+@media (max-width: 768px) {
+  /* Hide sidebar off-screen on mobile */
+  .sidebar { transform: translateX(-100%); }
+  .sidebar.open { transform: translateX(0); box-shadow: 4px 0 24px rgba(0,0,0,0.2); }
+
+  .main-content { margin-left: 0; }
+  .menu-toggle  { display: block; }
+
+  .page { padding: 20px 16px; }
+  .topbar { padding: 0 16px; }
+
+  .cards-row { grid-template-columns: 1fr; }
+  .controls-bar { flex-direction: column; }
+  .controls-bar .input-field,
+  .controls-bar .btn-primary,
+  .controls-bar .btn-secondary { width: 100%; }
+
+  /* Hide category column on small screens */
+  .hide-mobile { display: none; }
+}

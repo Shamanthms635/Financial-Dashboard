@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- ============================================================
+       Finance Dashboard - index.html
+       HTML = the structure/skeleton of the page.
+  ============================================================ -->
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="FinTrack – a simple personal finance dashboard." />
+  <title>FinTrack – Finance Dashboard</title>
+
+  <!-- Modern font from Google -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Our stylesheet -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <!-- ============================================================
+       SIDEBAR — Left side navigation
+  ============================================================ -->
+  <aside class="sidebar" id="sidebar">
+
+    <div class="sidebar-brand">
+      <span class="brand-name">FinTrack</span>
+    </div>
+
+    <nav class="sidebar-nav">
+      <!-- data-page tells JavaScript which page to show -->
+      <a href="#" class="nav-item active" data-page="dashboard">Dashboard</a>
+      <a href="#" class="nav-item" data-page="transactions">Transactions</a>
+      <a href="#" class="nav-item" data-page="insights">Insights</a>
+    </nav>
+
+    <!-- Role switcher -->
+    <div class="sidebar-footer">
+      <label for="role-select" class="role-label">Role</label>
+      <select id="role-select" class="role-select">
+        <option value="viewer">Viewer</option>
+        <option value="admin">Admin</option>
+      </select>
+      <div class="role-badge" id="role-badge">Viewer Mode</div>
+    </div>
+
+  </aside>
+
+  <!-- ============================================================
+       MAIN CONTENT — Right side
+  ============================================================ -->
+  <main class="main-content">
+
+    <!-- TOP BAR -->
+    <header class="topbar">
+      <!-- Hamburger button — only visible on mobile -->
+      <button class="menu-toggle" id="menu-toggle">Menu</button>
+      <div class="topbar-left">
+        <h1 class="page-title" id="page-title">Dashboard</h1>
+        <p class="page-subtitle" id="page-subtitle">Your financial overview</p>
+      </div>
+      <!-- Dark mode toggle -->
+      <button class="dark-toggle" id="dark-mode-btn">Dark</button>
+    </header>
+
+    <!-- ============================================================
+         PAGE: DASHBOARD
+    ============================================================ -->
+    <section class="page" id="page-dashboard">
+
+      <!-- Summary cards -->
+      <div class="cards-row">
+
+        <div class="card">
+          <div class="card-label">Total Balance</div>
+          <div class="card-value balance" id="total-balance">$0.00</div>
+        </div>
+
+        <div class="card">
+          <div class="card-label">Total Income</div>
+          <div class="card-value income" id="total-income">$0.00</div>
+        </div>
+
+        <div class="card">
+          <div class="card-label">Total Expenses</div>
+          <div class="card-value expense" id="total-expenses">$0.00</div>
+        </div>
+
+      </div>
+
+      <!-- Recent transactions -->
+      <div class="section-card">
+        <div class="section-header">
+          <h2 class="section-title">Recent Transactions</h2>
+          <button class="btn-link" onclick="switchPage('transactions')">View All</button>
+        </div>
+        <div id="recent-transactions"></div>
+      </div>
+
+    </section>
+
+    <!-- ============================================================
+         PAGE: TRANSACTIONS
+    ============================================================ -->
+    <section class="page hidden" id="page-transactions">
+
+      <!-- Controls: search, filter, sort, actions -->
+      <div class="controls-bar">
+        <input type="text" id="search-input" class="input-field" placeholder="Search transactions..." />
+        <select id="filter-type" class="input-field">
+          <option value="all">All Types</option>
+          <option value="income">Income</option>
+          <option value="expense">Expense</option>
+        </select>
+        <select id="filter-category" class="input-field">
+          <option value="all">All Categories</option>
+        </select>
+        <select id="sort-by" class="input-field">
+          <option value="date-desc">Newest First</option>
+          <option value="date-asc">Oldest First</option>
+          <option value="amount-desc">Highest Amount</option>
+          <option value="amount-asc">Lowest Amount</option>
+        </select>
+        <!-- Only visible to Admin -->
+        <button class="btn-primary admin-only hidden" id="add-btn">Add Transaction</button>
+        <button class="btn-secondary" id="export-btn">Export CSV</button>
+      </div>
+
+      <div class="section-card">
+        <div id="all-transactions"></div>
+      </div>
+
+    </section>
+
+    <!-- ============================================================
+         PAGE: INSIGHTS
+    ============================================================ -->
+    <section class="page hidden" id="page-insights">
+
+      <div class="insights-grid" id="insights-grid"></div>
+
+      <div class="section-card">
+        <h2 class="section-title" style="margin-bottom:16px">Monthly Comparison</h2>
+        <div id="monthly-comparison"></div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- ============================================================
+       MODAL — Add / Edit Transaction (Admin only)
+  ============================================================ -->
+  <div class="modal-overlay hidden" id="modal-overlay">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 class="modal-title" id="modal-title">Add Transaction</h2>
+        <button class="modal-close" id="modal-close">Close</button>
+      </div>
+
+      <form id="transaction-form">
+
+        <div class="form-group">
+          <label for="form-desc">Description</label>
+          <input type="text" id="form-desc" class="input-field" placeholder="e.g. Grocery shopping" required />
+        </div>
+
+        <div class="form-group">
+          <label for="form-amount">Amount ($)</label>
+          <input type="number" id="form-amount" class="input-field" placeholder="0.00" min="0.01" step="0.01" required />
+        </div>
+
+        <div class="form-group">
+          <label for="form-type">Type</label>
+          <select id="form-type" class="input-field">
+            <option value="income">Income</option>
+            <option value="expense">Expense</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="form-category">Category</label>
+          <select id="form-category" class="input-field">
+            <option value="Salary">Salary</option>
+            <option value="Freelance">Freelance</option>
+            <option value="Food">Food</option>
+            <option value="Transport">Transport</option>
+            <option value="Shopping">Shopping</option>
+            <option value="Entertainment">Entertainment</option>
+            <option value="Health">Health</option>
+            <option value="Bills">Bills</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="form-date">Date</label>
+          <input type="date" id="form-date" class="input-field" required />
+        </div>
+
+        <button type="submit" class="btn-primary" style="width:100%;margin-top:8px">Save</button>
+
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast notification -->
+  <div class="toast hidden" id="toast"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
