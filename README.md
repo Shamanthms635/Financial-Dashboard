@@ -1,6 +1,6 @@
 # 💰 FinTrack – Personal Finance Dashboard
 
-A clean, beginner-friendly finance dashboard built with **plain HTML, CSS, and JavaScript** — no frameworks, no build tools, just open and go!
+A clean Finance dashboard built with **plain HTML, CSS, and JavaScript** — no frameworks, no build tools, just open and go!
 
 ---
 
@@ -57,35 +57,14 @@ Switch between roles using the dropdown in the sidebar:
 Click the moon button in the top-right to toggle dark mode. Your preference is saved automatically.
 
 ### 💾 Data Persistence
-Transactions and dark mode preference are saved to the browser's **Local Storage**, so your data survives page refreshes.
+Transactions and dark mode preference are saved to the browser's **Local Storage**, so data survives page refreshes.
 
 ---
 
-## 🧠 What You'll Learn (Beginner Guide)
-
-| File | Concepts Covered |
-|------|-----------------|
-| `index.html` | HTML structure, semantic elements, forms, attributes |
-| `style.css` | CSS variables, flexbox, grid, media queries, animations |
-| `app.js` | Variables, arrays, objects, functions, events, DOM manipulation, local storage |
-
-### Key JavaScript Concepts Used:
-- `let` / `const` — declaring variables
-- `Array.filter()` — keeping only matching items
-- `Array.reduce()` — summing values
-- `Array.forEach()` — looping through items
-- `document.getElementById()` — finding elements on the page
-- `element.innerHTML` — inserting HTML into the page
-- `addEventListener()` — reacting to user actions
-- `localStorage` — saving data in the browser
-
----
 
 ## 🎨 Design Decisions
 
-- **No frameworks** — Everything is vanilla HTML/CSS/JS so it's easy to understand
 - **CSS variables** — Colors and sizes defined once at the top of `style.css`
-- **SVG donut chart** — Built from scratch using the stroke-dasharray trick
 - **CSS bar chart** — Pure CSS with height transitions for the animated bars
 - **Mobile responsive** — Sidebar collapses on small screens with a hamburger menu
 
