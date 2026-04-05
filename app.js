@@ -1,16 +1,4 @@
 /* ================================================================
-   Finance Dashboard — app.js
-   JavaScript = makes the page interactive.
-
-   BEGINNER GUIDE:
-   - Variables  → store data:       let x = 5
-   - Arrays     → lists of items:   let list = [1, 2, 3]
-   - Objects    → grouped data:     let obj = { name: "Ali", age: 20 }
-   - Functions  → reusable blocks:  function doSomething() { ... }
-   - Events     → user actions:     button.addEventListener("click", ...)
-================================================================ */
-
-/* ================================================================
    1. DATA — our mock transactions
    In a real app this would come from a server.
 ================================================================ */
